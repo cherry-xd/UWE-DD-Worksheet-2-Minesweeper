@@ -1,5 +1,10 @@
-import random
-import string
+from settings import Settings
+import random, string
+
+settings = Settings()
+
+def getSettings():
+    return settings
 
 class Cell:
     def __init__(self):
@@ -32,43 +37,30 @@ class Cell:
         else:
             print(' ', end = '')
 
-
 class Grid:
-    size = 5
-    difficulty = "Medium"
-    diffScale = 4
-    minecount = round((size ^ 2) /  diffScale)
-        
     def __init__(self):
-        self.grid = [[Cell() for i in range(self.size)] for i in range(self.size)]
-        
-    def calcDiff():
-        Grid.diffScale = Grid.diffScale
-        Grid.difficulty = Grid.difficulty
-        Grid.minecount = round((Grid.size ^ 2) /  Grid.diffScale)
-        
-    def setSize(size):
-        Grid.size = size
+        self.grid = [[Cell() for i in range(settings.gridSize)] for i in range(settings.gridSize)]
 
     @staticmethod
     def randomCell():
-        x = random.randint(0, Grid.size - 1)
-        y = random.randint(0, Grid.size - 1)
+        x = random.randint(0, settings.gridSize - 1)
+        y = random.randint(0, settings.gridSize - 1)
 
         return x, y
 
     def draw(self):
+
         print('\n')
         alphabet_string = string.ascii_lowercase
         cols = list(alphabet_string)
         print('    ', end = '')
-        for x in range(Grid.size):
+        for x in range(settings.gridSize):
             print(cols[x] + '   ', end = '')
         line = '----'
-        print('\n  -' + (line * Grid.size))
-        for y in range(Grid.size):
+        print('\n  -' + (line * settings.gridSize))
+        for y in range(settings.gridSize):
             print(cols[y], '| ', end = '')
-            for x in range(Grid.size):
+            for x in range(settings.gridSize):
                 self.grid[y][x].draw()
                 print(' | ', end = '')
-            print('\n  -' + (line * Grid.size))
+            print('\n  -' + (line * settings.gridSize))
