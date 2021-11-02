@@ -32,8 +32,17 @@ class Cell:
     def draw(self):
         if self.mines != -1:
             print(self.mines, end = '')
-        elif self.flag:
+            
+        elif self.flag and not self.open:
             print('F', end = '')
+
+        elif self.open:
+            self.flag = False
+            if self.mine:
+                print('#', end = '')
+            else:
+                print('-', end = '')
+                
         else:
             print(' ', end = '')
 
@@ -45,9 +54,8 @@ class Grid:
     def randomCell():
         x = random.randint(0, settings.gridSize - 1)
         y = random.randint(0, settings.gridSize - 1)
-
         return x, y
-
+    
     def draw(self):
 
         print('\n')
