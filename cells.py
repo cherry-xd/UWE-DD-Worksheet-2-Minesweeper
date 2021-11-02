@@ -23,25 +23,36 @@ class Cell:
         if not self.open:
             self.flag = not self.flag
 
-    def openCell(self):
-        self.open = True
-        
-    def setMines(self, mines):
-        self.mines = mines
+    def openCell(self, row, col, grid):
+        if self.open:
+            return
+        else:
+            self.open = True
+            nearCells = []
+            for y in range(-1,2):
+                if (col + y) < 0 or (col + y) > settings.gridSize - 1:
+                    continue
+                for x in range(-1,2):
+                    if (row + x) < 0 or (row + x) > settings.gridSize - 1:
+                        continue
+                    nearCells.append(grid.grid[row + x][col + y])
+            self.mines = 0
+            for i, cell in enumerate(nearCells):
+                if nearCells[i].isMine():
+                    self.mines += 1
 
     def draw(self):
-        if self.mines != -1:
-            print(self.mines, end = '')
-            
-        elif self.flag and not self.open:
+        if self.flag and not self.open:
             print('F', end = '')
 
         elif self.open:
             self.flag = False
+            if self.mines > 0:
+                print('{}'.format(self.mines), end = '')
+            elif self.mines <= 0:
+                print('-', end = '')
             if self.mine:
                 print('#', end = '')
-            else:
-                print('-', end = '')
                 
         else:
             print(' ', end = '')
