@@ -58,9 +58,8 @@ def drawGame():
             print("Cell entered does not exist")
         else:
             cell = grid.grid[dict["row"]][dict["col"]]
-            print(cell)
             if dict["action"].lower() == "o":
-                cell.openCell()
+                cell.openCell(dict["row"], dict["col"], grid)
                 if cell.isMine():
                     grid.draw()
                     input("\nGAME OVER!!! type anything to return to the menu: ")
